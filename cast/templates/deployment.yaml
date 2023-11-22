@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cast
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: cast
+  template:
+    metadata:
+      labels:
+        app: cast
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+      - name: cast
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: IfNotPresent
+        command: ["sh", "-c", "uvicorn app.main:app --reload --host 0.0.0.0"]
+        ports:
+          - containerPort: 8000
+        env:
+          - name: DATABASE_URI
+            value: {{ .Values.db.uri }}
+      restartPolicy: Always

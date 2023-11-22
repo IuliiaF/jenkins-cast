@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-cast
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-cast
+  serviceName: postgres-cast
+  template:
+    metadata:
+      labels:
+        app: postgres-cast
+    spec:
+      containers:
+      - name: postgres-cast
+        image: postgres:12.0-alpine
+        env:
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: rootpass-cast
+                key: password
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: rootpass-cast
+                key: user
+          - name: POSTGRES_DB
+            value: cast_db_dev
+        ports:
+        - containerPort: 5432
+          protocol: TCP
+        volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: postgres-data-cast
+      volumes:
+        - name: postgres-data-cast
+          persistentVolumeClaim:
+            claimName: postgres-data-cast
