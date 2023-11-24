@@ -71,7 +71,7 @@ stage('Deploiement en dev'){
                 cp cast/values.yaml values.yml
                 cat values.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                helm upgrade --install app cast --values=values.yml --namespace dev
+                helm upgrade --install cast cast --values=values.yml --namespace dev
                 '''
                 }
             }
@@ -92,7 +92,7 @@ stage('Deploiement en QA'){
                 cp cast/values.yaml values.yml
                 cat values.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                helm upgrade --install app cast --values=values.yml --namespace qa
+                helm upgrade --install cast cast --values=values.yml --namespace qa
                 '''
                 }
             }
@@ -113,7 +113,7 @@ stage('Deploiement en staging'){
                 cp cast/values.yaml values.yml
                 cat values.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                helm upgrade --install app cast --values=values.yml --namespace staging
+                helm upgrade --install cast cast --values=values.yml --namespace staging
                 '''
                 }
             }
@@ -140,7 +140,7 @@ stage('Deploiement en staging'){
                 cp cast/values.yaml values.yml
                 cat values.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                helm upgrade --install app cast --values=values.yml --namespace prod
+                helm upgrade --install cast cast --values=values.yml --namespace prod
                 '''
                 }
             }
