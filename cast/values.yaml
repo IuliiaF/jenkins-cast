@@ -11,7 +11,7 @@ image:
   tag: latest
 
 db:
-  uri: postgresql://cast_db_username:cast_db_password@postgres-service-cast:5001/cast_db_dev
+  uri: postgresql://cast_db_username:cast_db_password@postgres-service-cast/cast_db_dev
 
 imagePullSecrets: 
   - name: regcred2
