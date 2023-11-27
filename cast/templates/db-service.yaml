@@ -3,9 +3,9 @@ kind: Service
 metadata:
   name: postgres-service-cast
 spec:
-  clusterIP: None
   selector:
     app: postgres-cast
   ports:
     - protocol: TCP
       port: 5432
+      targetPort: 5432
